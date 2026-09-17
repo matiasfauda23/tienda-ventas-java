@@ -43,6 +43,9 @@ public class Main {
                     case 6:
                         listarTodo();
                         break;
+                    case 7:
+                        buscarPorNombre();
+                        break;
                     case 0:
                         System.out.println("\n¡Gracias por usar el sistema de ventas!");
                         break;
@@ -145,6 +148,25 @@ public class Main {
             }
         }
     }
+    
+    private static void buscarPorNombre() {
+        System.out.println("\n--- BUSCAR PRODUCTOS POR NOMBRE ---");
+        System.out.print("Ingrese el texto a buscar: ");
+        String texto = scanner.nextLine();
+
+        List<Producto> encontrados = tiendaService.buscarProductosPorNombre(texto);
+
+        if (encontrados.isEmpty()) {
+            System.out.println("No se encontraron productos con ese nombre: " + texto);
+        } else {
+            System.out.println("Productos encontrados:");
+            for (Producto p : encontrados) {
+                System.out.println(" - " + p);
+            }
+        }
+    }
+    
+    
 
     private static void calcularComisionVendedor() {
         System.out.println("\n--- CALCULAR COMISIÓN DE VENDEDOR ---");

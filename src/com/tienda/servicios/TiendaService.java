@@ -40,6 +40,16 @@ public class TiendaService {
         }
         throw new ElementoNoEncontradoException("No se encontró el producto con código: " + codigo);
     }
+    
+    public List<Producto> buscarProductosPorNombre(String texto) {
+        List<Producto> filtrados = new ArrayList<>();
+        for (Producto p : productos) {
+            if (p.getNombre().toLowerCase().contains(texto.toLowerCase())) {
+                filtrados.add(p);
+            }
+        }
+        return filtrados;
+    }
 
     public Vendedor buscarVendedorPorCodigo(String codigo) throws ElementoNoEncontradoException {
         for (Vendedor v : vendedores) {
