@@ -2,17 +2,20 @@
 
 Aplicación de consola desarrollada en Java para la gestión de productos, vendedores y ventas con almacenamiento en memoria y cálculo de comisiones.
 
-##  Características
+## Características
 * **Gestión de Entidades:** Registro de productos y vendedores.
 * **Registro de Ventas:** Vinculación de vendedor con producto y cantidad.
 * **Cálculo de Comisiones:**
-  * 5% para ventas de hasta 2 productos.
-  * 10% para ventas de más de 2 productos.
-* **Buscadores:** Búsqueda de productos por categoría y por código.
-* **Manejo de Excepciones:** Excepción personalizada `ElementoNoEncontradoException` para validar la existencia de entidades.
+  * Se calcula según la cantidad de ventas (transacciones) realizadas por el vendedor, no según las unidades de una venta individual.
+  * 5% del total facturado por el vendedor si realizó hasta 2 ventas.
+  * 10% del total facturado por el vendedor si realizó 3 o más ventas.
+* **Buscadores de Productos:**
+  * Por categoría (coincidencia exacta).
+  * Por nombre (coincidencia parcial, sin distinguir mayúsculas/minúsculas).
+* **Manejo de Excepciones:** Excepción personalizada `ElementoNoEncontradoException` para validar la existencia de productos y vendedores al registrar una venta o consultar comisiones.
 
 ## Tecnologías
-* **Lenguaje:** Java 17+
+* **Lenguaje:** Java 8+ (sin dependencias de sintaxis moderna; probado con JDK 17)
 * **Estructura de Datos:** Colecciones (`ArrayList`, `List`)
 * **Control de Versiones:** Git (Conventional Commits)
 
@@ -42,3 +45,8 @@ erDiagram
     VENDEDOR ||--o{ VENTA : "realiza"
     PRODUCTO ||--o{ VENTA : "se registra en"
 ```
+
+> **Nota:** `VENTA` no tiene una clave primaria propia porque la clase `Venta`
+> del código no tiene un campo `id`. En un modelo de base de datos real
+> convendría agregar un identificador autoincremental para poder distinguir
+> ventas idénticas (mismo producto, mismo vendedor, misma cantidad).
