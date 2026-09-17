@@ -11,15 +11,9 @@ public class Venta {
         this.cantidad = cantidad;
     }
 
-    // Método que calcula la comisión 
-    public double calcularComision() {
-        double totalVenta = producto.getPrecio() * cantidad;
-        
-        if (cantidad <= 2) {
-            return totalVenta * 0.05; 
-        } else {
-            return totalVenta * 0.10; 
-        }
+ // Calcula el monto total de esta venta (sin decidir comisión)
+    public double calcularTotal() {
+        return producto.getPrecio() * cantidad;
     }
 
     public Producto getProducto() { return producto; }
@@ -28,8 +22,8 @@ public class Venta {
 
     @Override
     public String toString() {
-        return "Venta: " + cantidad + "x " + producto.getNombre() + 
-               " | Vendedor: " + vendedor.getNombre() + 
-               " | Comisión ganada: $" + calcularComision();
+        return "Venta: " + cantidad + "x " + producto.getNombre() +
+               " | Vendedor: " + vendedor.getNombre() +
+               " | Total: $" + calcularTotal();
     }
 }

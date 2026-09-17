@@ -61,17 +61,22 @@ public class TiendaService {
         return filtrados;
     }
 
-    // Calculo de comisiones
     public double calcularComisionTotalVendedor(String codigoVendedor) throws ElementoNoEncontradoException {
         Vendedor v = buscarVendedorPorCodigo(codigoVendedor);
-        double totalComision = 0.0;
+
+        int cantidadVentas = 0;
+        double totalVendido = 0.0;
 
         for (Venta venta : ventas) {
             if (venta.getVendedor().getCodigo().equalsIgnoreCase(v.getCodigo())) {
-                totalComision += venta.calcularComision();
+                cantidadVentas++;
+                totalVendido += venta.calcularTotal();
             }
         }
-        return totalComision;
+
+        double porcentaje = (cantidadVentas <= 2) ? 0.05 : 0.10;
+
+        return totalVendido * porcentaje;
     }
 
     // Getters para listar información en consola
