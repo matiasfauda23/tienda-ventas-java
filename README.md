@@ -18,9 +18,17 @@ Aplicación de consola desarrollada en Java para la gestión de productos, vende
   * `IllegalArgumentException` (de Java): se lanza al intentar crear una venta con cantidad ≤0, o un producto/vendedor con precio/sueldo negativo.
 
 ## Tecnologías
-* **Lenguaje:** Java 8+ (sin dependencias de sintaxis moderna; probado con JDK 17)
+* **Lenguaje:** Java (desarrollado y probado con JDK 21)
 * **Estructura de Datos:** Colecciones (`ArrayList`, `List`)
 * **Control de Versiones:** Git (Conventional Commits)
+
+## Cómo ejecutar el proyecto
+
+1. Clonar o descargar este repositorio.
+2. Abrir Eclipse → `File` → `Import` → `General` → `Existing Projects into Workspace`.
+3. Seleccionar la carpeta del proyecto descargado (`TiendaVentas`).
+4. En el Package Explorer, ubicar `Main.java` dentro de `com.tienda.app`.
+5. Clic derecho sobre `Main.java` → `Run As` → `Java Application`.
 
 ## Diagrama Entidad-Relación (DER)
 
