@@ -6,6 +6,9 @@ public class Vendedor {
     private double sueldo;
 
     public Vendedor(String codigo, String nombre, double sueldo) {
+        if (sueldo < 0) {
+            throw new IllegalArgumentException("El sueldo no puede ser negativo");
+        }
         this.codigo = codigo;
         this.nombre = nombre;
         this.sueldo = sueldo;

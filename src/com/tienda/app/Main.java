@@ -92,7 +92,7 @@ public class Main {
     private static void registrarProducto() {
         System.out.println("\n--- REGISTRAR PRODUCTO ---");
         System.out.print("Código: ");
-        String codigo = scanner.nextLine();
+        String codigo = scanner.nextLine().trim();
         System.out.print("Nombre: ");
         String nombre = scanner.nextLine();
         System.out.print("Precio: ");
@@ -100,11 +100,11 @@ public class Main {
         System.out.print("Categoría: ");
         String categoria = scanner.nextLine();
 
-        Producto producto = new Producto(codigo, nombre, precio, categoria);
         try {
+            Producto producto = new Producto(codigo, nombre, precio, categoria);
             tiendaService.agregarProducto(producto);
             System.out.println("¡Producto registrado con éxito!");
-        } catch (CodigoDuplicadoException e) {
+        } catch (CodigoDuplicadoException | IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -112,17 +112,17 @@ public class Main {
     private static void registrarVendedor() {
         System.out.println("\n--- REGISTRAR VENDEDOR ---");
         System.out.print("Código: ");
-        String codigo = scanner.nextLine();
+        String codigo = scanner.nextLine().trim();
         System.out.print("Nombre: ");
         String nombre = scanner.nextLine();
         System.out.print("Sueldo: ");
         double sueldo = Double.parseDouble(scanner.nextLine());
 
-        Vendedor vendedor = new Vendedor(codigo, nombre, sueldo);
         try {
+            Vendedor vendedor = new Vendedor(codigo, nombre, sueldo);
             tiendaService.agregarVendedor(vendedor);
             System.out.println("¡Vendedor registrado con éxito!");
-        } catch (CodigoDuplicadoException e) {
+        } catch (CodigoDuplicadoException | IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -130,9 +130,9 @@ public class Main {
     private static void registrarVenta() {
         System.out.println("\n--- REGISTRAR VENTA ---");
         System.out.print("Código de Producto: ");
-        String codProducto = scanner.nextLine();
+        String codProducto = scanner.nextLine().trim();
         System.out.print("Código de Vendedor: ");
-        String codVendedor = scanner.nextLine();
+        String codVendedor = scanner.nextLine().trim();
         System.out.print("Cantidad de unidades: ");
         int cantidad = Integer.parseInt(scanner.nextLine());
 
@@ -183,7 +183,7 @@ public class Main {
     private static void calcularComisionVendedor() {
         System.out.println("\n--- CALCULAR COMISIÓN DE VENDEDOR ---");
         System.out.print("Código de Vendedor: ");
-        String codigo = scanner.nextLine();
+        String codigo = scanner.nextLine().trim();;
 
         try {
             Vendedor vendedor = tiendaService.buscarVendedorPorCodigo(codigo);
