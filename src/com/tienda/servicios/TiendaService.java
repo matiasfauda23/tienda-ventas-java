@@ -1,5 +1,6 @@
 package com.tienda.servicios;
 
+import com.tienda.excepciones.CodigoDuplicadoException;
 import com.tienda.excepciones.ElementoNoEncontradoException;
 import com.tienda.modelos.Producto;
 import com.tienda.modelos.Vendedor;
@@ -15,11 +16,21 @@ public class TiendaService {
     private List<Venta> ventas = new ArrayList<>();
 
     // Metodos de registro
-    public void agregarProducto(Producto producto) {
+    public void agregarProducto(Producto producto) throws CodigoDuplicadoException {
+        for (Producto p : productos) {
+            if (p.getCodigo().equalsIgnoreCase(producto.getCodigo())) {
+                throw new CodigoDuplicadoException("Ya existe un producto con código: " + producto.getCodigo());
+            }
+        }
         productos.add(producto);
     }
 
-    public void agregarVendedor(Vendedor vendedor) {
+    public void agregarVendedor(Vendedor vendedor) throws CodigoDuplicadoException {
+        for (Vendedor v : vendedores) {
+            if (v.getCodigo().equalsIgnoreCase(vendedor.getCodigo())) {
+                throw new CodigoDuplicadoException("Ya existe un vendedor con código: " + vendedor.getCodigo());
+            }
+        }
         vendedores.add(vendedor);
     }
 
