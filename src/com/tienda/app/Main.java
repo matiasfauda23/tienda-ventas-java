@@ -1,5 +1,6 @@
 package com.tienda.app;
 
+import com.tienda.excepciones.CodigoDuplicadoException;
 import com.tienda.excepciones.ElementoNoEncontradoException;
 import com.tienda.modelos.Producto;
 import com.tienda.modelos.Vendedor;
@@ -14,7 +15,6 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Carga de datos de prueba iniciales
         cargarDatosPrueba();
 
         int opcion = -1;
@@ -58,7 +58,7 @@ public class Main {
                 System.out.println("Ocurrió un error inesperado: " + e.getMessage());
             }
 
-            System.out.println(); // Línea en blanco para separar iteraciones
+            System.out.println();
         } while (opcion != 0);
 
         scanner.close();
@@ -72,16 +72,21 @@ public class Main {
         System.out.println("4. Buscar Productos por Categoría");
         System.out.println("5. Calcular Comisión de Vendedor");
         System.out.println("6. Listar Productos, Vendedores y Ventas");
+        System.out.println("7. Buscar Productos por Nombre");
         System.out.println("0. Salir");
     }
 
     private static void cargarDatosPrueba() {
-        tiendaService.agregarProducto(new Producto("P001", "Notebook", 1500.0, "Tecnologia"));
-        tiendaService.agregarProducto(new Producto("P002", "Mouse Gamer", 30.0, "Tecnologia"));
-        tiendaService.agregarProducto(new Producto("P003", "Silla Ergonómica", 200.0, "Muebles"));
+        try {
+            tiendaService.agregarProducto(new Producto("P001", "Notebook", 1500.0, "Tecnologia"));
+            tiendaService.agregarProducto(new Producto("P002", "Mouse Gamer", 30.0, "Tecnologia"));
+            tiendaService.agregarProducto(new Producto("P003", "Silla Ergonómica", 200.0, "Muebles"));
 
-        tiendaService.agregarVendedor(new Vendedor("V001", "Carlos Gómez", 800.0));
-        tiendaService.agregarVendedor(new Vendedor("V002", "Ana Martínez", 850.0));
+            tiendaService.agregarVendedor(new Vendedor("V001", "Carlos Gómez", 800.0));
+            tiendaService.agregarVendedor(new Vendedor("V002", "Ana Martínez", 850.0));
+        } catch (CodigoDuplicadoException e) {
+            System.out.println("Error al cargar datos de prueba: " + e.getMessage());
+        }
     }
 
     private static void registrarProducto() {
@@ -96,8 +101,12 @@ public class Main {
         String categoria = scanner.nextLine();
 
         Producto producto = new Producto(codigo, nombre, precio, categoria);
-        tiendaService.agregarProducto(producto);
-        System.out.println("¡Producto registrado con éxito!");
+        try {
+            tiendaService.agregarProducto(producto);
+            System.out.println("¡Producto registrado con éxito!");
+        } catch (CodigoDuplicadoException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private static void registrarVendedor() {
@@ -110,8 +119,12 @@ public class Main {
         double sueldo = Double.parseDouble(scanner.nextLine());
 
         Vendedor vendedor = new Vendedor(codigo, nombre, sueldo);
-        tiendaService.agregarVendedor(vendedor);
-        System.out.println("¡Vendedor registrado con éxito!");
+        try {
+            tiendaService.agregarVendedor(vendedor);
+            System.out.println("¡Vendedor registrado con éxito!");
+        } catch (CodigoDuplicadoException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private static void registrarVenta() {
@@ -127,8 +140,9 @@ public class Main {
             tiendaService.registrarVenta(codProducto, codVendedor, cantidad);
             System.out.println("¡Venta registrada exitosamente!");
         } catch (ElementoNoEncontradoException e) {
-            // Manejo de la excepción personalizada
             System.out.println("Error al registrar venta: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -148,7 +162,7 @@ public class Main {
             }
         }
     }
-    
+
     private static void buscarPorNombre() {
         System.out.println("\n--- BUSCAR PRODUCTOS POR NOMBRE ---");
         System.out.print("Ingrese el texto a buscar: ");
@@ -165,8 +179,6 @@ public class Main {
             }
         }
     }
-    
-    
 
     private static void calcularComisionVendedor() {
         System.out.println("\n--- CALCULAR COMISIÓN DE VENDEDOR ---");

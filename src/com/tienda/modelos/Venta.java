@@ -6,11 +6,13 @@ public class Venta {
     private int cantidad;
 
     public Venta(Producto producto, Vendedor vendedor, int cantidad) {
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor a cero");
+        }
         this.producto = producto;
         this.vendedor = vendedor;
         this.cantidad = cantidad;
     }
-
  // Calcula el monto total de esta venta (sin decidir comisión)
     public double calcularTotal() {
         return producto.getPrecio() * cantidad;
